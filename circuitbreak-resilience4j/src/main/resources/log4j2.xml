@@ -96,7 +96,8 @@
 	</Appenders>
 	<Loggers>
 		<!-- 同步 -->
-		<Logger name="org.springframework.boot" level="info"></Logger>
+		<Logger name="org.springframework.boot" level="info"/>
+		<Logger name="io.github.resilience4j" level="info"/>
 		<Root level="info">
 			<AppenderRef ref="Console"/>
 		</Root>
