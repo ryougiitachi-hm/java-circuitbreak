@@ -1,0 +1,63 @@
+# spring boot actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        # * is not available
+        include: health,info
+#        include: *
+    health:
+      show-details: always
+
+# resilience4j
+resilience4j.circuitbreaker:
+  # io.github.resilience4j.common.circuitbreaker.configuration.CircuitBreakerConfigurationProperties.InstanceProperties
+#  circuitbreaker:
+  metrics:
+    enabled: true
+  configs:
+    default:
+      registerHealthIndicator: true
+      permittedNumberOfCallsInHalfOpenState: 2
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 2
+      minimumNumberOfCalls: 2
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      slowCallRateThreshold: 50
+      slowCallDurationThreshold: 50ms
+    redis-mock:
+      registerHealthIndicator: true
+      permittedNumberOfCallsInHalfOpenState: 2
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 2
+      minimumNumberOfCalls: 2
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      slowCallRateThreshold: 50
+      slowCallDurationThreshold: 50ms
+  instances:
+    redis-mock:
+      registerHealthIndicator: true
+      permittedNumberOfCallsInHalfOpenState: 2
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 2
+      minimumNumberOfCalls: 2
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+      slowCallRateThreshold: 50
+      slowCallDurationThreshold: 50ms
+#        eventConsumerBufferSize: 10
+#        recordFailurePredicate: io.github.robwin.exception.RecordFailurePredicate
+resilience4j.retry:
+  instances:
+    backendA:
+      maxAttempts: 3
+      waitDuration: 10s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+#        retryExceptions:
+#          - org.springframework.web.client.HttpServerErrorException
+#          - java.io.IOException
+#        ignoreExceptions:
+#          - io.github.robwin.exception.BusinessException
