@@ -4,6 +4,8 @@ import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -22,14 +24,15 @@ public class RedisMockAdapter implements RedisPort {
      * spring el is avaiable for fallbackMethod, but not expected, better to not use it.
      * */
 //    @CircuitBreaker(name = "redis-mock", fallbackMethod = "#{redisFallbackAdapter.loadUserInfo(#username)}")
+    @Retry(name = "redis-mock", fallbackMethod = "loadUserInfoFallbackRetry")
     @CircuitBreaker(name = "redis-mock", fallbackMethod = "loadUserInfoFallback")
     @Override
     public UserDto loadUserInfo(String username) {
         log.info("Start loading user info for username {}.", username);
         try {
             TimeUnit.SECONDS.sleep(1L);
-            throw new RuntimeException();
-//            return UserDto.builder().username(UUID.randomUUID().toString()).build();
+//            throw new RuntimeException();
+            return UserDto.builder().username(UUID.randomUUID().toString()).build();
         }
         catch (InterruptedException e) {
             log.error("Thread {} was interrupted. ", Thread.currentThread());
@@ -38,9 +41,12 @@ public class RedisMockAdapter implements RedisPort {
     }
 
     private UserDto loadUserInfoFallback(String username, Throwable throwable) {
-        log.error("Downgraded, throwable={}. ", throwable);
+        log.error("circuit breaker downgraded, throwable={}. ", throwable);
         return UserDto.builder().username("error username").build();
     }
 
-
+    private UserDto loadUserInfoFallbackRetry(String username, Throwable throwable) {
+        log.error("retry downgraded. ", throwable);
+        return UserDto.builder().username("retry、").build();
+    }
 }

@@ -20,11 +20,11 @@ public class DefaultCircuitBreakTest {
     @Test
     public void testCircuitBreak() {
         CircuitBreakerConfig config = CircuitBreakerConfig.custom()
-                .failureRateThreshold(50.0f) // 50 by default
+                .failureRateThreshold(60.0f) // 50 by default
 //                .automaticTransitionFromOpenToHalfOpenEnabled() // false by default
 //                .enableAutomaticTransitionFromOpenToHalfOpen() // false by default
 //                .currentTimestampFunction()
-//                .waitDurationInOpenState() // 60s by default
+                .waitDurationInOpenState(Duration.ofSeconds(30L)) // 60s by default
 //                .waitIntervalFunctionInOpenState() //
 //                .maxWaitDurationInHalfOpenState() // n/a by default
 //                .permittedNumberOfCallsInHalfOpenState() // 10 by default
@@ -45,6 +45,8 @@ public class DefaultCircuitBreakTest {
         registry.addConfiguration(getClass().getSimpleName(), config);
         CircuitBreaker circuitBreaker = registry
                 .circuitBreaker(getClass().getSimpleName(), getClass().getSimpleName());
+        CircuitBreaker cb1 = registry
+                .circuitBreaker(getClass().getSimpleName());
         CheckedFunction0<String> checkedFunction0 = CircuitBreaker
                 .decorateCheckedSupplier(circuitBreaker, ()->{
                     TimeUnit.MILLISECONDS.sleep(50L);

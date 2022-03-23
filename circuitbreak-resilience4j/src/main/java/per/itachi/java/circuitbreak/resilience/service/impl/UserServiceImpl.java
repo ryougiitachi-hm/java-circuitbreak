@@ -5,9 +5,6 @@ import org.springframework.stereotype.Service;
 import per.itachi.java.circuitbreak.resilience.adapter.RedisPort;
 import per.itachi.java.circuitbreak.resilience.service.UserService;
 
-import javax.annotation.PostConstruct;
-import java.util.UUID;
-
 @Service
 public class UserServiceImpl implements UserService {
 

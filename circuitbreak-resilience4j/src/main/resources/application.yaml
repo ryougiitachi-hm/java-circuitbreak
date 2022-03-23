@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 # spring boot actuator
 management:
   endpoints:
@@ -13,29 +16,29 @@ management:
 resilience4j.circuitbreaker:
   # io.github.resilience4j.common.circuitbreaker.configuration.CircuitBreakerConfigurationProperties.InstanceProperties
 #  circuitbreaker:
-  metrics:
-    enabled: true
-  configs:
-    default:
-      registerHealthIndicator: true
-      permittedNumberOfCallsInHalfOpenState: 2
-      slidingWindowType: COUNT_BASED
-      slidingWindowSize: 2
-      minimumNumberOfCalls: 2
-      waitDurationInOpenState: 5s
-      failureRateThreshold: 50
-      slowCallRateThreshold: 50
-      slowCallDurationThreshold: 50ms
-    redis-mock:
-      registerHealthIndicator: true
-      permittedNumberOfCallsInHalfOpenState: 2
-      slidingWindowType: COUNT_BASED
-      slidingWindowSize: 2
-      minimumNumberOfCalls: 2
-      waitDurationInOpenState: 5s
-      failureRateThreshold: 50
-      slowCallRateThreshold: 50
-      slowCallDurationThreshold: 50ms
+#  metrics:
+#    enabled: true
+#  configs:
+#    default:
+#      registerHealthIndicator: true
+#      permittedNumberOfCallsInHalfOpenState: 2
+#      slidingWindowType: COUNT_BASED
+#      slidingWindowSize: 2
+#      minimumNumberOfCalls: 2
+#      waitDurationInOpenState: 5s
+#      failureRateThreshold: 50
+#      slowCallRateThreshold: 50
+#      slowCallDurationThreshold: 50ms
+#    redis-mock:
+#      registerHealthIndicator: true
+#      permittedNumberOfCallsInHalfOpenState: 2
+#      slidingWindowType: COUNT_BASED
+#      slidingWindowSize: 2
+#      minimumNumberOfCalls: 2
+#      waitDurationInOpenState: 5s
+#      failureRateThreshold: 50
+#      slowCallRateThreshold: 50
+#      slowCallDurationThreshold: 50ms
   instances:
     redis-mock:
       registerHealthIndicator: true
@@ -44,16 +47,16 @@ resilience4j.circuitbreaker:
       slidingWindowSize: 2
       minimumNumberOfCalls: 2
       waitDurationInOpenState: 5s
-      failureRateThreshold: 50
+      failureRateThreshold: 65
       slowCallRateThreshold: 50
       slowCallDurationThreshold: 50ms
 #        eventConsumerBufferSize: 10
 #        recordFailurePredicate: io.github.robwin.exception.RecordFailurePredicate
 resilience4j.retry:
   instances:
-    backendA:
-      maxAttempts: 3
-      waitDuration: 10s
+    redis-mock:
+      maxAttempts: 1
+      waitDuration: 50ms
       enableExponentialBackoff: true
       exponentialBackoffMultiplier: 2
 #        retryExceptions:

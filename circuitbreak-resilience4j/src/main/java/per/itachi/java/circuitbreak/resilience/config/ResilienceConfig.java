@@ -31,7 +31,7 @@ public class ResilienceConfig {
                 .build();
     }
 
-    @Bean
+//    @Bean
     public CircuitBreakerRegistry defaultCircuitBreakerRegistry() {
         return CircuitBreakerRegistry.ofDefaults();
     }
