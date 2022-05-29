@@ -22,8 +22,8 @@ public class DefaultRateLimiterTest {
         RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
 //                .writableStackTraceEnabled(true)
                 .limitRefreshPeriod(Duration.ofMillis(1000L)) // 500ns by default
-                .limitForPeriod(2) // 50 by default, convenient for testing.
-                .timeoutDuration(Duration.ofMillis(1000L)) // 5s by default
+                .limitForPeriod(1) // 50 by default, convenient for testing.
+                .timeoutDuration(Duration.ofMillis(0)) // 5s by default
 //                .drainPermissionsOnResult(either-> false)
                 .build();
         RateLimiter rateLimiter = rateLimiterRegistry
@@ -38,6 +38,7 @@ public class DefaultRateLimiterTest {
                     log.error("Failure {}. ", event);
                 });
         CheckedRunnable checkedRunnable = RateLimiter.decorateCheckedRunnable(rateLimiter, ()->{
+//            Thread.sleep(1000L);
             log.info("executed.");
         });
 //        int countOfCalls = 10;
