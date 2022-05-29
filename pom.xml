@@ -10,6 +10,7 @@
     <modules>
         <module>circuitbreak-resilience4j</module>
         <module>circuitbreak-hystrix</module>
+        <module>circuitbreak-sentinel</module>
     </modules>
 
     <properties>
@@ -24,6 +25,7 @@
         <lombok.version>1.18.20</lombok.version>
         <netflix.hystrix.version>1.5.18</netflix.hystrix.version>
         <resilience4j.version>1.7.0</resilience4j.version>
+        <alibaba.sentinel.version>1.8.4</alibaba.sentinel.version>
     </properties>
 
     <dependencyManagement>
@@ -171,6 +173,32 @@
                 <version>${resilience4j.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-parent</artifactId>
+                <version>${alibaba.sentinel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-adapter</artifactId>
+                <version>${alibaba.sentinel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-logging</artifactId>
+                <version>${alibaba.sentinel.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-logging-slf4j</artifactId>
+                <version>${alibaba.sentinel.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
